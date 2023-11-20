@@ -1,13 +1,25 @@
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin: 0 auto;
-  margin-top: 60px;
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    margin: 0 auto;
+    margin-top: 60px;
 }
 
 a {
-  color: #60b5cc;
+    color: #60b5cc;
+}
+
+button {
+    background-color: #60b5cc; /* Blå bakgrundsfärg */
+    color: white; /* Vit text */
+    padding: 10px 20px; /* Vertikal och horisontell padding */
+    border: none; /* Tar bort standardkanten */
+    border-radius: 5px; /* Rundade hörn */
+    font-size: 1em; /* Lämplig teckensnittsstorlek */
+    cursor: pointer; /* Ändrar muspekaren till en hand när den hovrar över knappen */
+    transition: background-color 0.3s; /* Gör en mjuk övergång för hover-effekten */
+    margin: 5px;
 }
