@@ -34,7 +34,6 @@ init savedMarkdown =
 type Msg
     = MarkdownChanged String
     | DownloadMarkdown
-    | SaveMarkdown
     | Tick Time.Posix
 
 
@@ -46,9 +45,6 @@ update msg model =
 
         DownloadMarkdown ->
             ( model, downloadMarkdown model.markdown )
-
-        SaveMarkdown ->
-            ( model, saveMarkdown model.markdown )
 
         Tick _ ->
             ( model, saveMarkdown model.markdown )
