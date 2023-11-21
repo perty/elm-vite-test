@@ -2,6 +2,8 @@
 
 I have done this almost solely by chatting with GitHub Copilot.
 
+Demo is here: [https://elm-vite-test.vercel.app/](https://elm-vite-test.vercel.app/)
+
 ## Starting point
 
 I started by from a template for Vite and Elm https://github.com/lindsaykwardell/vite-elm-template.
