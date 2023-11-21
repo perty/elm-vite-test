@@ -1,11 +1,12 @@
 port module Main exposing (main)
 
 import Browser
-import Html exposing (Html, button, div, h1, p, text, textarea)
-import Html.Attributes exposing (class, style, value)
+import Html exposing (Html, button, div, h1, img, p, text, textarea)
+import Html.Attributes exposing (class, height, src, style, value)
 import Html.Events exposing (onClick, onInput)
 import Markdown
 import Time
+import VitePluginHelper exposing (asset)
 
 
 type alias Model =
@@ -53,7 +54,8 @@ update msg model =
 view : Model -> Html Msg
 view model =
     div []
-        [ h1 [] [ text "Markdown Editor" ]
+        [ img [ src <| asset "/src/assets/logotype.png", height 50 ] []
+        , h1 [] [ text "Markdown Editor" ]
         , p [] [ text "This is a simple markdown editor. It will save your markdown every 30 seconds locally in your browser. You can download the markdown by pressing the download button." ]
         , div []
             [ textarea
