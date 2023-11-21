@@ -1,4 +1,4 @@
-port module Main exposing (main)
+port module Main exposing (Model, Msg, main)
 
 import Browser
 import Html exposing (Html, button, div, h1, img, p, text, textarea)
@@ -18,6 +18,7 @@ type alias Model =
 init : String -> ( Model, Cmd Msg )
 init savedMarkdown =
     let
+        markdown : String
         markdown =
             if savedMarkdown == "" then
                 "type markdown here"
@@ -35,7 +36,7 @@ init savedMarkdown =
 type Msg
     = MarkdownChanged String
     | DownloadMarkdown
-    | Tick Time.Posix
+    | Tick
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -47,7 +48,7 @@ update msg model =
         DownloadMarkdown ->
             ( model, downloadMarkdown model.markdown )
 
-        Tick _ ->
+        Tick ->
             ( model, saveMarkdown model.markdown )
 
 
@@ -79,7 +80,7 @@ port saveMarkdown : String -> Cmd msg
 
 subscriptions : Model -> Sub Msg
 subscriptions _ =
-    Time.every 30000 Tick
+    Time.every 30000 (\_ -> Tick)
 
 
 main : Program String Model Msg
