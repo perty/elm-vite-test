@@ -2,7 +2,6 @@
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    text-align: center;
     color: #2c3e50;
     margin: 0 auto;
     margin-top: 60px;
@@ -10,6 +9,27 @@
 
 a {
     color: #60b5cc;
+}
+
+.markdown-output {
+    /* CSS properties for the div itself */
+    width: 100%;
+    padding: 10px;
+}
+
+.markdown-output h1,
+.markdown-output h2,
+.markdown-output h3,
+.markdown-output h4,
+.markdown-output h5,
+.markdown-output h6 {
+    /* CSS properties for headings */
+    color: blue;
+}
+
+.markdown-output p {
+    /* CSS properties for paragraphs */
+    line-height: 1.5;
 }
 
 button {
