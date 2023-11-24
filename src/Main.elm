@@ -1,31 +1,93 @@
-module Main exposing (main)
+port module Main exposing (Model, Msg, main)
 
 import Browser
-import HelloWorld exposing (helloWorld)
-import Html exposing (Html, div, img)
-import Html.Attributes exposing (src, style)
-import Msg exposing (Msg(..))
-import VitePluginHelper
+import Html exposing (Html, button, div, h1, img, p, text, textarea)
+import Html.Attributes exposing (class, height, src, style, value)
+import Html.Events exposing (onClick, onInput)
+import Markdown
+import Time
+import VitePluginHelper exposing (asset)
 
 
-main : Program () Int Msg
-main =
-    Browser.sandbox { init = 0, update = update, view = view }
+type alias Model =
+    { markdown : String
+    , html : Html Msg
+    }
 
 
-update : Msg -> number -> number
+init : String -> ( Model, Cmd Msg )
+init savedMarkdown =
+    let
+        markdown : String
+        markdown =
+            if savedMarkdown == "" then
+                "type markdown here"
+
+            else
+                savedMarkdown
+    in
+    ( { markdown = markdown
+      , html = Markdown.toHtml [] markdown
+      }
+    , Cmd.none
+    )
+
+
+type Msg
+    = MarkdownChanged String
+    | DownloadMarkdown
+    | Tick
+
+
+update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        Increment ->
-            model + 1
+        MarkdownChanged newMarkdown ->
+            ( { model | markdown = newMarkdown, html = Markdown.toHtml [] newMarkdown }, Cmd.none )
 
-        Decrement ->
-            model - 1
+        DownloadMarkdown ->
+            ( model, downloadMarkdown model.markdown )
+
+        Tick ->
+            ( model, saveMarkdown model.markdown )
 
 
-view : Int -> Html Msg
+view : Model -> Html Msg
 view model =
     div []
-        [ img [ src <| VitePluginHelper.asset "/src/assets/logotype.png", style "width" "300px" ] []
-        , helloWorld model
+        [ img [ src <| asset "/src/assets/logotype.png", height 50 ] []
+        , h1 [] [ text "Markdown Editor" ]
+        , p [] [ text "This is a simple markdown editor. It will save your markdown every 30 seconds locally in your browser. You can download the markdown by pressing the download button." ]
+        , div []
+            [ textarea
+                [ style "width" "100%"
+                , style "height" "50vh"
+                , value model.markdown
+                , onInput MarkdownChanged
+                ]
+                []
+            , button [ onClick DownloadMarkdown ] [ text "Download Markdown" ]
+            , div [ class "markdown-output" ] [ model.html ]
+            ]
         ]
+
+
+port downloadMarkdown : String -> Cmd msg
+
+
+port saveMarkdown : String -> Cmd msg
+
+
+subscriptions : Model -> Sub Msg
+subscriptions _ =
+    Time.every 30000 (\_ -> Tick)
+
+
+main : Program String Model Msg
+main =
+    Browser.element
+        { init = init
+        , update = update
+        , view = view
+        , subscriptions = subscriptions
+        }
